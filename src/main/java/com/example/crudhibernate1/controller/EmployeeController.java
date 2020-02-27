@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/employees")
@@ -52,5 +53,11 @@ public class EmployeeController {
     public ResponseEntity<EmployeeEntity> deleteEmployeeById(@PathVariable Long id) {
         employeeService.deleteEmployeeById(id);
         return new ResponseEntity<EmployeeEntity>(null, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping("/transform-structure")
+    public ResponseEntity<Map<Integer, EmployeeEntity>> transformStructure() {
+        Map<Integer, EmployeeEntity> employee = employeeService.transformStructure();
+        return  new ResponseEntity<Map<Integer, EmployeeEntity>>(employee, new HttpHeaders(), HttpStatus.OK);
     }
 }

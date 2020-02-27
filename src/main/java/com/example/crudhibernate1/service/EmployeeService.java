@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.NotSupportedException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -87,5 +89,12 @@ public class EmployeeService {
         if(deletedEmployee.isPresent()) {
             employeeRepository.deleteById(id);
         }
+    }
+
+    public Map<Integer, EmployeeEntity> transformStructure() {
+        List<EmployeeEntity> employeeEntityList =  employeeRepository.findAll();
+        Map<Integer, EmployeeEntity> employee = employeeEntityList.stream()
+                .collect(Collectors.toMap(EmployeeEntity::getAge, e -> e));
+        return employee;
     }
 }
